@@ -10,7 +10,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="bg-black/50 px-4 py-1 text-xs">
+    <nav className="bg-black/50 px-4 py-1 text-xs backdrop-blur-lg">
       <div className="flex items-center justify-between gap-4">
         <div>Apple</div>
         <div>

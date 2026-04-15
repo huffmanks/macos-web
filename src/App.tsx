@@ -9,7 +9,7 @@ export default function App() {
 
   return (
     <>
-      <div className="grid h-screen w-screen grid-rows-[auto_1fr_auto] overflow-hidden">
+      <div className="grid h-screen w-screen grid-rows-[auto_1fr_auto] overflow-hidden bg-[url('/desktop/wallpaper.jpg')] bg-cover bg-center bg-no-repeat">
         <Navbar />
         <main ref={constraintsRef} className="relative size-full overflow-hidden">
           <WindowManager constraintsRef={constraintsRef} />

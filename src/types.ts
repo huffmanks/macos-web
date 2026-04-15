@@ -22,10 +22,15 @@ export type WindowState = {
   data: WindowData | null;
 };
 
+export type DockApp = {
+  id: string;
+  name: string;
+  image: string;
+};
+
 export type WindowKey =
   | "finder"
-  | "contact"
-  | "resume"
+  | "contacts"
   | "safari"
   | "photos"
   | "terminal"
@@ -33,4 +38,5 @@ export type WindowKey =
   | "imgFile";
 
 export type Windows = Record<WindowKey, WindowState>;
-export type WindowsData = Record<WindowKey, WindowData>;
+export type WindowsData = Omit<Record<WindowKey, WindowData>, "txtFile" | "imgFile">;
+export type DockApps = Omit<Record<WindowKey, DockApp>, "txtFile" | "imgFile">;
