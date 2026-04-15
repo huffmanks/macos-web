@@ -16,9 +16,9 @@ export default function Dock() {
       <div className="mx-auto w-fit rounded-xl bg-black/50 p-3 backdrop-blur-lg">
         <div className="flex items-center gap-3">
           {Object.entries(DOCK_APPS).map(([key, app]) => {
-            const windowKey = key as keyof typeof WINDOWS_DATA;
+            const windowKey = key as keyof typeof DOCK_APPS;
             const data = WINDOWS_DATA[windowKey];
-            const isDisabled = windows[windowKey].isOpen;
+            const isDisabled = windows[windowKey]?.isOpen ?? false;
 
             return (
               <button

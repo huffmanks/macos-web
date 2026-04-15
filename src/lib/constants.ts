@@ -106,6 +106,32 @@ export const WINDOWS_DATA: WindowsData = {
     },
     backgroundColor: "#000000",
   },
+  txtFile: {
+    id: "6dbb39cb-7a21-4841-a314-82eecc012cb3",
+    name: "txtFile",
+    size: {
+      height: 200,
+      width: 300,
+    },
+    position: {
+      x: 350,
+      y: 600,
+    },
+    backgroundColor: "#000000",
+  },
+  imgFile: {
+    id: "928edf84-c20b-44da-8bb2-5a8aa03f6710",
+    name: "imgFile",
+    size: {
+      height: 200,
+      width: 300,
+    },
+    position: {
+      x: 350,
+      y: 600,
+    },
+    backgroundColor: "#000000",
+  },
 };
 
 export const DOCK_APPS: DockApps = {
