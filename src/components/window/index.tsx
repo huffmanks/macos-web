@@ -1,14 +1,16 @@
-import { useRef } from "react";
-
 import { motion } from "motion/react";
 import { useShallow } from "zustand/shallow";
 
 import { useWindowStore } from "@/lib/store/window";
 import type { WindowData, WindowKey } from "@/types";
 
-export default function Window({ windowKey }: { windowKey: WindowKey }) {
-  const constraintsRef = useRef(null);
-
+export default function Window({
+  windowKey,
+  constraintsRef,
+}: {
+  windowKey: WindowKey;
+  constraintsRef: React.RefObject<HTMLElement | null>;
+}) {
   const { windows, focusWindow, updatePosition } = useWindowStore(
     useShallow((state) => ({
       windows: state.windows,
@@ -24,13 +26,23 @@ export default function Window({ windowKey }: { windowKey: WindowKey }) {
   }
 
   return (
-    <div ref={constraintsRef} className="pointer-events-none fixed inset-0">
+    <>
       <motion.div
-        initial={{ x: data.position.x, y: data.position.y }}
-        animate={{ x: data.position.x, y: data.position.y }}
+        data-window={windowKey}
+        initial={{ opacity: 0, x: data.position.x, y: data.position.y }}
+        animate={{ opacity: 1, x: data.position.x, y: data.position.y }}
+        transition={{
+          opacity: { duration: 0.25 },
+          x: { duration: 0 },
+          y: { duration: 0 },
+        }}
         drag
         dragConstraints={constraintsRef}
         dragMomentum={false}
+        onDragStart={(e) => {
+          e.stopPropagation();
+          focusWindow(windowKey);
+        }}
         onDragEnd={(_, info) => {
           updatePosition(
             windowKey,
@@ -56,6 +68,6 @@ export default function Window({ windowKey }: { windowKey: WindowKey }) {
           <h2 className="text-lg font-medium">{windowKey}</h2>
         </div>
       </motion.div>
-    </div>
+    </>
   );
 }

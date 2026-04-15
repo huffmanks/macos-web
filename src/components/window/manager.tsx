@@ -3,7 +3,11 @@ import type { WindowData, WindowKey } from "@/types";
 
 import Window from "@/components/window";
 
-export default function WindowManager() {
+export default function WindowManager({
+  constraintsRef,
+}: {
+  constraintsRef: React.RefObject<HTMLElement | null>;
+}) {
   const windows = useWindowStore((state) => state.windows);
 
   return (
@@ -14,7 +18,7 @@ export default function WindowManager() {
 
         if (!state.isOpen) return null;
 
-        return <Window key={windowData.id} windowKey={windowKey} />;
+        return <Window key={windowData.id} windowKey={windowKey} constraintsRef={constraintsRef} />;
       })}
     </>
   );
