@@ -12,9 +12,9 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="bg-black/50 px-1 text-xs backdrop-blur-lg">
-      <div className="flex items-center justify-between gap-5">
-        <button className="rounded-sm px-2.5 py-1 active:bg-white/20">
+    <header className="bg-black/50 pr-2 pl-1 text-xs backdrop-blur-lg">
+      <nav className="flex items-center justify-between gap-4">
+        <button className="rounded-sm px-3.5 py-1 active:bg-white/20">
           <Icon name="apple" className="size-4" />
         </button>
         <div>
@@ -23,18 +23,18 @@ export default function Navbar() {
           </button>
         </div>
         <div className="flex items-center">
-          <button className="rounded-sm px-2.5 py-1 active:bg-white/20">
+          <button className="rounded-sm px-2.25 py-1 active:bg-white/20">
             <Icon name="wifi" className="size-4" />
           </button>
-          <button className="rounded-sm px-2.5 py-1 active:bg-white/20">
+          <button className="rounded-sm px-2.25 py-1 active:bg-white/20">
             <Icon name="search" className="size-4" />
           </button>
-          <button className="flex items-center gap-2 rounded-sm px-2.5 py-1 font-medium active:bg-white/20">
+          <button className="flex items-center gap-2 rounded-sm px-2.25 py-1 font-medium active:bg-white/20">
             <span>Wed Apr 15</span>
             <span>11:20 AM</span>
           </button>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }

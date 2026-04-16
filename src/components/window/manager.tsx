@@ -18,7 +18,11 @@ export default function WindowManager({
 
         if (!state.isOpen) return null;
 
-        return <Window key={windowData.id} windowKey={windowKey} constraintsRef={constraintsRef} />;
+        return (
+          <Window key={windowData.id} windowKey={windowKey} constraintsRef={constraintsRef}>
+            <div>hi</div>
+          </Window>
+        );
       })}
     </>
   );

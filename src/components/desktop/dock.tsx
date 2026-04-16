@@ -53,7 +53,7 @@ function DockAppButton({
 
   return (
     <>
-      {isLastItem && <div className="mx-2 h-8 border-l border-gray-400" />}
+      {isLastItem && <div className="border-border ml-2 h-10 border-l" />}
       <button
         className="cursor-pointer border-none transition-opacity outline-none active:opacity-60"
         onClick={handleClick}>

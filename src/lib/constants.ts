@@ -38,6 +38,11 @@ export const INITIAL_WINDOWS: Windows = {
     zIndex: INITIAL_Z_INDEX,
     data: null,
   },
+  trash: {
+    isOpen: false,
+    zIndex: INITIAL_Z_INDEX,
+    data: null,
+  },
 };
 
 export const WINDOWS_DATA: WindowsData = {
@@ -122,6 +127,19 @@ export const WINDOWS_DATA: WindowsData = {
   imgFile: {
     id: "928edf84-c20b-44da-8bb2-5a8aa03f6710",
     name: "imgFile",
+    size: {
+      height: 200,
+      width: 300,
+    },
+    position: {
+      x: 350,
+      y: 600,
+    },
+    backgroundColor: "#000000",
+  },
+  trash: {
+    id: "9a9b6a10-d43b-4d5f-aa59-70ab87b9fcf8",
+    name: "Trash",
     size: {
       height: 200,
       width: 300,
