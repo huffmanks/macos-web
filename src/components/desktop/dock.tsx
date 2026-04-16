@@ -54,11 +54,16 @@ function DockAppButton({
   return (
     <>
       {isLastItem && <div className="border-border ml-2 h-10 border-l" />}
-      <button
-        className="cursor-pointer border-none transition-opacity outline-none active:opacity-60"
-        onClick={handleClick}>
-        <img className="size-12 object-cover" draggable="false" src={app.image} />
-      </button>
+      <div className="relative flex items-center gap-3">
+        <button
+          className="cursor-pointer border-none transition-opacity outline-none active:opacity-60"
+          onClick={handleClick}>
+          <img className="size-12 object-cover" draggable="false" src={app.image} />
+        </button>
+        {isOpen && (
+          <div className="absolute -bottom-2 left-1/2 size-1 -translate-x-1/2 rounded-full bg-white/50"></div>
+        )}
+      </div>
     </>
   );
 }

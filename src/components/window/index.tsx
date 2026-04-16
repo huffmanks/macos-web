@@ -2,6 +2,7 @@ import { motion, useDragControls } from "motion/react";
 import { useShallow } from "zustand/shallow";
 
 import { useWindowStore } from "@/lib/store/window";
+import { cn } from "@/lib/utils";
 import type { WindowData, WindowKey } from "@/types";
 
 import { Icon } from "@/components/icons";
@@ -15,9 +16,10 @@ export default function Window({
   constraintsRef: React.RefObject<HTMLElement | null>;
   children: React.ReactNode;
 }) {
-  const { windows, focusWindow, closeWindow, updatePosition } = useWindowStore(
+  const { windows, highestWindowKey, focusWindow, closeWindow, updatePosition } = useWindowStore(
     useShallow((state) => ({
       windows: state.windows,
+      highestWindowKey: state.highestWindowKey,
       focusWindow: state.focusWindow,
       closeWindow: state.closeWindow,
       updatePosition: state.updatePosition,
@@ -27,14 +29,6 @@ export default function Window({
   const dragControls = useDragControls();
 
   const data = windows[windowKey].data as WindowData;
-
-  // TODO
-  // focused window gets color dots other ones get grayed out
-  //   const highestWindow = Object.keys(windows).reduce((highest, currentKey) => {
-  //     return (windows[currentKey].zIndex > (windows[highest]?.zIndex || -Infinity))
-  //         ? currentKey
-  //         : highest;
-  // }, null);
 
   if (!windows[windowKey].isOpen || !data) {
     return null;
@@ -73,17 +67,21 @@ export default function Window({
         }}>
         <div className="ring-ring bg-background overflow-hidden rounded-md ring ring-offset-0">
           <header
-            className="bg-secondary cursor-grab p-3 active:cursor-grabbing"
+            className="bg-secondary p-3 active:cursor-grabbing"
             onPointerDown={(e) => {
               e.stopPropagation();
               focusWindow(windowKey);
               dragControls.start(e);
             }}>
             <div
-              className="group flex w-fit items-center gap-2"
+              className="group flex w-fit cursor-auto items-center gap-2"
               onPointerDown={(e) => e.stopPropagation()}>
               <button onClick={() => closeWindow(windowKey)}>
-                <div className="flex size-3 items-center justify-center rounded-full bg-red-500">
+                <div
+                  className={cn(
+                    "flex size-3 items-center justify-center rounded-full",
+                    windowKey === highestWindowKey ? "bg-red-500" : "bg-muted-foreground/30"
+                  )}>
                   <Icon
                     name="close"
                     className="text-background/50 hidden size-2.5 group-hover:block"
@@ -91,7 +89,11 @@ export default function Window({
                 </div>
               </button>
               <button>
-                <div className="flex size-3 items-center justify-center rounded-full bg-yellow-500">
+                <div
+                  className={cn(
+                    "flex size-3 items-center justify-center rounded-full",
+                    windowKey === highestWindowKey ? "bg-yellow-500" : "bg-muted-foreground/30"
+                  )}>
                   <Icon
                     name="minimize"
                     className="text-background/50 hidden size-2.5 group-hover:block"
@@ -99,7 +101,11 @@ export default function Window({
                 </div>
               </button>
               <button>
-                <div className="flex size-3 items-center justify-center rounded-full bg-green-500">
+                <div
+                  className={cn(
+                    "flex size-3 items-center justify-center rounded-full",
+                    windowKey === highestWindowKey ? "bg-green-500" : "bg-muted-foreground/30"
+                  )}>
                   <Icon
                     name="resize"
                     className="text-background/50 hidden size-2.5 group-hover:block"
