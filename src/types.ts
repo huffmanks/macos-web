@@ -39,4 +39,6 @@ export type WindowKey =
 
 export type Windows = Record<WindowKey, WindowState>;
 export type WindowsData = Record<WindowKey, WindowData>;
-export type DockApps = Omit<Record<WindowKey, DockApp>, "txtFile" | "imgFile">;
+export type DockApps = Omit<Record<WindowKey, DockApp>, "txtFile" | "imgFile"> & {
+  trash: DockApp;
+};

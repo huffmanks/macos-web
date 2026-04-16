@@ -9,8 +9,13 @@ export default function Dock() {
     <footer className="mb-1.5 w-full">
       <div className="mx-auto w-fit rounded-xl bg-black/50 p-3 backdrop-blur-lg">
         <div className="flex items-center gap-3">
-          {Object.entries(DOCK_APPS).map(([key, app]) => (
-            <DockAppButton key={app.id} windowKey={key as WindowKey} app={app} />
+          {Object.entries(DOCK_APPS).map(([key, app], index, array) => (
+            <DockAppButton
+              key={app.id}
+              isLastItem={index === array.length - 1}
+              windowKey={key as WindowKey}
+              app={app}
+            />
           ))}
         </div>
       </div>
@@ -18,7 +23,15 @@ export default function Dock() {
   );
 }
 
-function DockAppButton({ windowKey, app }: { windowKey: WindowKey; app: DockApp }) {
+function DockAppButton({
+  windowKey,
+  app,
+  isLastItem,
+}: {
+  windowKey: WindowKey;
+  app: DockApp;
+  isLastItem: boolean;
+}) {
   const { windows, openWindow, focusWindow } = useWindowStore(
     useShallow((state) => ({
       windows: state.windows,
@@ -39,10 +52,13 @@ function DockAppButton({ windowKey, app }: { windowKey: WindowKey; app: DockApp 
   }
 
   return (
-    <button
-      className="cursor-pointer border-none transition-opacity outline-none active:opacity-60"
-      onClick={handleClick}>
-      <img className="size-12 object-cover" draggable="false" src={app.image} />
-    </button>
+    <>
+      {isLastItem && <div className="mx-2 h-8 border-l border-gray-400" />}
+      <button
+        className="cursor-pointer border-none transition-opacity outline-none active:opacity-60"
+        onClick={handleClick}>
+        <img className="size-12 object-cover" draggable="false" src={app.image} />
+      </button>
+    </>
   );
 }

@@ -160,4 +160,9 @@ export const DOCK_APPS: DockApps = {
     name: "Contacts",
     image: "/apps/contacts.png",
   },
+  trash: {
+    id: "b133d9d2-bdd9-4762-9465-508080b31244",
+    name: "Trash",
+    image: "/apps/trash.png",
+  },
 };
