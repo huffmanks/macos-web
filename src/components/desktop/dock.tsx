@@ -6,7 +6,7 @@ import type { DockApp, WindowKey } from "@/types";
 
 export default function Dock() {
   return (
-    <footer className="mb-1.5 w-full">
+    <footer className="fixed right-0 bottom-0 left-0 z-500 mb-1.5">
       <div className="mx-auto w-fit rounded-xl bg-black/50 p-3 backdrop-blur-lg">
         <div className="flex items-center gap-3">
           {Object.entries(DOCK_APPS).map(([key, app], index, array) => (

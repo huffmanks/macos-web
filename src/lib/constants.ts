@@ -1,6 +1,8 @@
 import type { DockApps, Windows, WindowsData } from "@/types";
 
-export const INITIAL_Z_INDEX = 1000;
+export const INITIAL_Z_INDEX = 300;
+export const DEFAULT_POSITION_X = 10;
+export const DEFAULT_POSITION_Y = 34;
 
 export const INITIAL_WINDOWS: Windows = {
   finder: {
@@ -54,8 +56,8 @@ export const WINDOWS_DATA: WindowsData = {
       width: 400,
     },
     position: {
-      x: 20,
-      y: 600,
+      x: DEFAULT_POSITION_X,
+      y: DEFAULT_POSITION_Y,
     },
     backgroundColor: "#0000ff",
   },
@@ -67,8 +69,8 @@ export const WINDOWS_DATA: WindowsData = {
       width: 300,
     },
     position: {
-      x: 350,
-      y: 600,
+      x: DEFAULT_POSITION_X,
+      y: DEFAULT_POSITION_Y,
     },
     backgroundColor: "#00ff00",
   },
@@ -80,8 +82,8 @@ export const WINDOWS_DATA: WindowsData = {
       width: 700,
     },
     position: {
-      x: 20,
-      y: 300,
+      x: DEFAULT_POSITION_X,
+      y: DEFAULT_POSITION_Y,
     },
     backgroundColor: "#ff0000",
   },
@@ -93,8 +95,8 @@ export const WINDOWS_DATA: WindowsData = {
       width: 300,
     },
     position: {
-      x: 350,
-      y: 600,
+      x: DEFAULT_POSITION_X,
+      y: DEFAULT_POSITION_Y,
     },
     backgroundColor: "#000000",
   },
@@ -106,8 +108,8 @@ export const WINDOWS_DATA: WindowsData = {
       width: 300,
     },
     position: {
-      x: 350,
-      y: 600,
+      x: DEFAULT_POSITION_X,
+      y: DEFAULT_POSITION_Y,
     },
     backgroundColor: "#000000",
   },
@@ -119,8 +121,8 @@ export const WINDOWS_DATA: WindowsData = {
       width: 300,
     },
     position: {
-      x: 350,
-      y: 600,
+      x: DEFAULT_POSITION_X,
+      y: DEFAULT_POSITION_Y,
     },
     backgroundColor: "#000000",
   },
@@ -132,8 +134,8 @@ export const WINDOWS_DATA: WindowsData = {
       width: 300,
     },
     position: {
-      x: 350,
-      y: 600,
+      x: DEFAULT_POSITION_X,
+      y: DEFAULT_POSITION_Y,
     },
     backgroundColor: "#000000",
   },
@@ -145,8 +147,8 @@ export const WINDOWS_DATA: WindowsData = {
       width: 300,
     },
     position: {
-      x: 350,
-      y: 600,
+      x: DEFAULT_POSITION_X,
+      y: DEFAULT_POSITION_Y,
     },
     backgroundColor: "#000000",
   },

@@ -9,11 +9,9 @@ import { Icon } from "@/components/icons";
 
 export default function Window({
   windowKey,
-  constraintsRef,
   children,
 }: {
   windowKey: WindowKey;
-  constraintsRef: React.RefObject<HTMLElement | null>;
   children: React.ReactNode;
 }) {
   const { windows, highestWindowKey, focusWindow, closeWindow, updatePosition } = useWindowStore(
@@ -39,7 +37,7 @@ export default function Window({
     <>
       <motion.div
         data-window={windowKey}
-        initial={{ opacity: 0, x: data.position.x, y: data.position.y }}
+        initial={false}
         animate={{ opacity: 1, x: data.position.x, y: data.position.y }}
         transition={{
           opacity: { duration: 0.25 },
@@ -49,12 +47,15 @@ export default function Window({
         drag
         dragControls={dragControls}
         dragListener={false}
-        dragConstraints={constraintsRef}
         dragMomentum={false}
         onDragEnd={(_, info) => {
-          updatePosition(windowKey, info.point.x, info.point.y);
+          updatePosition(
+            windowKey,
+            data.position.x + info.offset.x,
+            data.position.y + info.offset.y
+          );
         }}
-        className="absolute"
+        className="absolute touch-none"
         style={{
           zIndex: windows[windowKey].zIndex,
         }}
@@ -68,7 +69,7 @@ export default function Window({
             onPointerDown={(e) => {
               e.stopPropagation();
               focusWindow(windowKey);
-              dragControls.start(e);
+              dragControls.start(e, { snapToCursor: false });
             }}>
             <div
               className="group flex w-fit cursor-auto items-center gap-2"
@@ -76,7 +77,7 @@ export default function Window({
               <button onClick={() => closeWindow(windowKey)}>
                 <div
                   className={cn(
-                    "flex size-3 items-center justify-center rounded-full",
+                    "flex size-3 items-center justify-center rounded-full group-hover:bg-red-500",
                     windowKey === highestWindowKey ? "bg-red-500" : "bg-muted-foreground/30"
                   )}>
                   <Icon
@@ -88,7 +89,7 @@ export default function Window({
               <button>
                 <div
                   className={cn(
-                    "flex size-3 items-center justify-center rounded-full",
+                    "flex size-3 items-center justify-center rounded-full group-hover:bg-yellow-500",
                     windowKey === highestWindowKey ? "bg-yellow-500" : "bg-muted-foreground/30"
                   )}>
                   <Icon
@@ -100,7 +101,7 @@ export default function Window({
               <button>
                 <div
                   className={cn(
-                    "flex size-3 items-center justify-center rounded-full",
+                    "flex size-3 items-center justify-center rounded-full group-hover:bg-green-500",
                     windowKey === highestWindowKey ? "bg-green-500" : "bg-muted-foreground/30"
                   )}>
                   <Icon
@@ -112,7 +113,7 @@ export default function Window({
             </div>
           </header>
           <div
-            className="p-4"
+            className="max-w-full p-4"
             style={{
               backgroundColor: data.backgroundColor,
               width: data.size.width,

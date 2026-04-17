@@ -12,7 +12,7 @@ export default function Navbar() {
   );
 
   return (
-    <header className="bg-black/50 pr-2 pl-1 text-xs backdrop-blur-lg">
+    <header className="fixed top-0 right-0 left-0 z-500 bg-black/50 pr-2 pl-1 text-xs backdrop-blur-lg">
       <nav className="flex items-center justify-between gap-4">
         <button className="rounded-sm px-3.5 py-1 active:bg-white/20">
           <Icon name="apple" className="size-4" />
