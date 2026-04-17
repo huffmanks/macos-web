@@ -1,6 +1,6 @@
 import { useShallow } from "zustand/shallow";
 
-import { useWindowStore } from "@/lib/store/window";
+import { resetPersistedStorage, useWindowStore } from "@/lib/store/window";
 
 import { Icon } from "@/components/icons";
 
@@ -18,7 +18,12 @@ export default function Navbar() {
           <Icon name="apple" className="size-4" />
         </button>
         <div>
-          <button className="rounded-sm px-2.5 py-1 active:bg-white/20" onClick={() => reset()}>
+          <button
+            className="rounded-sm px-2.5 py-1 active:bg-white/20"
+            onClick={() => {
+              resetPersistedStorage();
+              reset();
+            }}>
             Reset
           </button>
         </div>

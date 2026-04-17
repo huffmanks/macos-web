@@ -3,7 +3,7 @@ import { useShallow } from "zustand/shallow";
 
 import { useWindowStore } from "@/lib/store/window";
 import { cn } from "@/lib/utils";
-import type { WindowData, WindowKey } from "@/types";
+import type { WindowKey } from "@/types";
 
 import { Icon } from "@/components/icons";
 
@@ -28,11 +28,12 @@ export default function Window({
 
   const dragControls = useDragControls();
 
-  const data = windows[windowKey].data as WindowData;
-
-  if (!windows[windowKey].isOpen || !data) {
+  const win = windows[windowKey];
+  if (!win.isOpen || !win.data) {
     return null;
   }
+
+  const data = win.data;
 
   return (
     <>
@@ -51,11 +52,7 @@ export default function Window({
         dragConstraints={constraintsRef}
         dragMomentum={false}
         onDragEnd={(_, info) => {
-          updatePosition(
-            windowKey,
-            data.position.x + info.offset.x,
-            data.position.y + info.offset.y
-          );
+          updatePosition(windowKey, info.point.x, info.point.y);
         }}
         className="absolute"
         style={{
