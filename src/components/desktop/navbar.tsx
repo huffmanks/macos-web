@@ -21,6 +21,8 @@ export default function Navbar() {
           <button
             className="rounded-sm px-2.5 py-1 active:bg-white/20"
             onClick={() => {
+              localStorage.clear();
+              window.location.reload();
               resetPersistedStorage();
               reset();
             }}>

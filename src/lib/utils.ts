@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { INITIAL_Z_INDEX } from "@/lib/constants";
 import type { WindowState, Windows } from "@/types";
 
-export function cn(...inputs: ClassValue[]) {
+export function cn(...inputs: Array<ClassValue>) {
   return twMerge(clsx(inputs));
 }
 
