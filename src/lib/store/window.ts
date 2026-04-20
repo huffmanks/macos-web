@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { INITIAL_WINDOWS, INITIAL_Z_INDEX } from "@/lib/constants";
-import { getNextZIndex } from "@/lib/utils";
+import { getNextZIndex, getTopWindowKey } from "@/lib/utils";
 import type { WindowData, WindowKey, Windows } from "@/types";
 
 type WindowStoreState = {
@@ -45,8 +45,8 @@ export const useWindowStore = create<WindowStoreState & WindowStoreActions>()(
           };
         }),
       closeWindow: (windowKey) =>
-        set((state) => ({
-          windows: {
+        set((state) => {
+          const updatedWindows = {
             ...state.windows,
             [windowKey]: {
               ...state.windows[windowKey],
@@ -54,9 +54,13 @@ export const useWindowStore = create<WindowStoreState & WindowStoreActions>()(
               zIndex: INITIAL_Z_INDEX,
               data: null,
             },
-          },
-          highestWindowKey: state.highestWindowKey === windowKey ? null : state.highestWindowKey,
-        })),
+          };
+
+          return {
+            windows: updatedWindows,
+            highestWindowKey: getTopWindowKey(updatedWindows),
+          };
+        }),
       focusWindow: (windowKey) =>
         set((state) => {
           if (!state.windows[windowKey].isOpen) return state;

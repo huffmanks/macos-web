@@ -1,4 +1,6 @@
-import { motion, useDragControls } from "motion/react";
+import { useRef } from "react";
+
+import { type PanInfo, motion, useDragControls } from "motion/react";
 import { useShallow } from "zustand/shallow";
 
 import { useWindowStore } from "@/lib/store/window";
@@ -9,11 +11,16 @@ import { Icon } from "@/components/icons";
 
 export default function Window({
   windowKey,
+  constraintsRef,
   children,
 }: {
   windowKey: WindowKey;
+  constraintsRef: React.RefObject<HTMLDivElement | null>;
   children: React.ReactNode;
 }) {
+  const windowRef = useRef<HTMLDivElement | null>(null);
+  const dragControls = useDragControls();
+
   const { windows, highestWindowKey, focusWindow, closeWindow, updatePosition } = useWindowStore(
     useShallow((state) => ({
       windows: state.windows,
@@ -24,8 +31,6 @@ export default function Window({
     }))
   );
 
-  const dragControls = useDragControls();
-
   const win = windows[windowKey];
   if (!win.isOpen || !win.data) {
     return null;
@@ -33,10 +38,26 @@ export default function Window({
 
   const data = win.data;
 
+  function handleOnDragEnd(_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) {
+    if (!constraintsRef.current || !windowRef.current) return;
+
+    const container = constraintsRef.current.getBoundingClientRect();
+    const win = windowRef.current.getBoundingClientRect();
+
+    const newX = data.position.x + info.offset.x;
+    const newY = data.position.y + info.offset.y;
+
+    const clampedX = Math.max(0, Math.min(newX, container.width - win.width));
+    const clampedY = Math.max(0, Math.min(newY, container.height - win.height));
+
+    updatePosition(windowKey, clampedX, clampedY);
+  }
+
   return (
     <>
       <motion.div
         data-window={windowKey}
+        ref={windowRef}
         initial={false}
         animate={{ opacity: 1, x: data.position.x, y: data.position.y }}
         transition={{
@@ -45,16 +66,12 @@ export default function Window({
           y: { duration: 0 },
         }}
         drag
+        dragConstraints={constraintsRef}
+        dragElastic={0}
         dragControls={dragControls}
         dragListener={false}
         dragMomentum={false}
-        onDragEnd={(_, info) => {
-          updatePosition(
-            windowKey,
-            data.position.x + info.offset.x,
-            data.position.y + info.offset.y
-          );
-        }}
+        onDragEnd={handleOnDragEnd}
         className="absolute touch-none"
         style={{
           zIndex: windows[windowKey].zIndex,

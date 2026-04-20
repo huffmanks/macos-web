@@ -58,7 +58,7 @@ function DockAppButton({
         <button
           className="cursor-pointer border-none transition-opacity outline-none active:opacity-60"
           onClick={handleClick}>
-          <img className="size-12 object-cover" draggable="false" src={app.image} />
+          <img className="size-12 object-cover select-none" draggable="false" src={app.image} />
         </button>
         {isOpen && (
           <div className="absolute -bottom-2 left-1/2 size-1 -translate-x-1/2 rounded-full bg-white/50"></div>
