@@ -1,9 +1,12 @@
 import { resetPersistedStorage, useDesktopStore } from "@/lib/store/desktop";
+import { getFormattedDateTime } from "@/lib/utils";
 
 import { Icon } from "@/components/icons";
 
 export default function Navbar() {
   const reset = useDesktopStore((state) => state.reset);
+
+  const { date, time } = getFormattedDateTime();
 
   function handleReset(e: React.MouseEvent) {
     e.stopPropagation();
@@ -32,8 +35,8 @@ export default function Navbar() {
             <Icon name="search" className="size-4" />
           </button>
           <button className="flex items-center gap-2 rounded-sm px-2.25 py-1 font-medium active:bg-white/20">
-            <span>Wed Apr 15</span>
-            <span>11:20 AM</span>
+            <span>{date}</span>
+            <span>{time}</span>
           </button>
         </div>
       </nav>
