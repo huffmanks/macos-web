@@ -1,21 +1,16 @@
 import { useShallow } from "zustand/shallow";
 
-import { DOCK_APPS, WINDOWS_DATA } from "@/lib/constants";
-import { useWindowStore } from "@/lib/store/window";
-import type { DockApp, WindowKey } from "@/types";
+import { DEFAULT_WINDOW_POSITION, DEFAULT_WINDOW_SIZE, DOCK_APPS } from "@/lib/constants";
+import { useDesktopStore } from "@/lib/store/desktop";
+import type { DockApp, InputWindowData } from "@/types";
 
 export default function Dock() {
   return (
     <footer className="fixed right-0 bottom-0 left-0 z-500 mb-1.5">
       <div className="mx-auto w-fit rounded-xl bg-black/50 p-3 backdrop-blur-lg">
         <div className="flex items-center gap-3">
-          {Object.entries(DOCK_APPS).map(([key, app], index, array) => (
-            <DockAppButton
-              key={app.id}
-              isLastItem={index === array.length - 1}
-              windowKey={key as WindowKey}
-              app={app}
-            />
+          {Object.entries(DOCK_APPS).map(([_key, app], index, array) => (
+            <DockAppButton key={app.id} app={app} isLastItem={index === array.length - 1} />
           ))}
         </div>
       </div>
@@ -23,32 +18,38 @@ export default function Dock() {
   );
 }
 
-function DockAppButton({
-  windowKey,
-  app,
-  isLastItem,
-}: {
-  windowKey: WindowKey;
-  app: DockApp;
-  isLastItem: boolean;
-}) {
-  const { windows, openWindow, focusWindow } = useWindowStore(
+function DockAppButton({ app, isLastItem }: { app: DockApp; isLastItem: boolean }) {
+  const windows = useDesktopStore((state) => state.windows);
+
+  const { openWindow, focusWindow, restoreWindow } = useDesktopStore(
     useShallow((state) => ({
-      windows: state.windows,
       openWindow: state.openWindow,
       focusWindow: state.focusWindow,
+      restoreWindow: state.restoreWindow,
     }))
   );
 
-  const data = WINDOWS_DATA[windowKey];
-  const isOpen = windows[windowKey]?.isOpen ?? false;
+  const window = Object.values(windows).find((w) => w.appId === app.id);
+  const isOpen = !!window;
+
+  const data: InputWindowData = {
+    appId: app.id,
+    size: DEFAULT_WINDOW_SIZE,
+    position: DEFAULT_WINDOW_POSITION,
+  };
 
   function handleClick() {
-    if (isOpen) {
-      focusWindow(windowKey);
-    } else {
-      openWindow(windowKey, data);
+    if (!window) {
+      openWindow({ data });
+      return;
     }
+
+    if (window.isMinimized) {
+      restoreWindow({ windowId: window.id });
+      return;
+    }
+
+    focusWindow({ windowId: window.id });
   }
 
   return (

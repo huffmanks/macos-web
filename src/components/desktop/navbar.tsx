@@ -1,15 +1,9 @@
-import { useShallow } from "zustand/shallow";
-
-import { resetPersistedStorage, useWindowStore } from "@/lib/store/window";
+import { resetPersistedStorage, useDesktopStore } from "@/lib/store/desktop";
 
 import { Icon } from "@/components/icons";
 
 export default function Navbar() {
-  const { reset } = useWindowStore(
-    useShallow((state) => ({
-      reset: state.reset,
-    }))
-  );
+  const reset = useDesktopStore((state) => state.reset);
 
   return (
     <header className="bg-black/50 pr-2 pl-1 text-xs backdrop-blur-lg select-none">

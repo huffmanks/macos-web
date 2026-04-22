@@ -1,29 +1,19 @@
-import { useWindowStore } from "@/lib/store/window";
-import type { WindowData, WindowKey } from "@/types";
+import { useDesktopStore } from "@/lib/store/desktop";
 
-import Window from "@/components/window";
+import WindowFrame from "@/components/window";
 
 export default function WindowManager({
   constraintsRef,
 }: {
   constraintsRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  const windows = useWindowStore((state) => state.windows);
+  const stack = useDesktopStore((state) => state.stack);
 
   return (
     <>
-      {Object.entries(windows).map(([key, state]) => {
-        const windowKey = key as WindowKey;
-        const windowData = state.data as WindowData;
-
-        if (!state.isOpen) return null;
-
-        return (
-          <Window key={windowData.id} windowKey={windowKey} constraintsRef={constraintsRef}>
-            <div>hi</div>
-          </Window>
-        );
-      })}
+      {stack.map((id) => (
+        <WindowFrame key={id} windowId={id} constraintsRef={constraintsRef} />
+      ))}
     </>
   );
 }

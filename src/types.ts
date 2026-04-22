@@ -8,36 +8,33 @@ export type WindowPosition = {
   y: number;
 };
 
+export type WindowId = string;
+
 export type WindowData = {
-  id: string;
-  name: string;
+  id: WindowId;
+  appId: DockAppId;
   size: WindowSize;
   position: WindowPosition;
-  backgroundColor: string;
+  isMinimized: boolean;
+  isMaximized: boolean;
+  createdAt: number;
+
+  lastSize?: WindowSize;
+  lastPosition?: WindowPosition;
 };
 
-export type WindowState = {
-  isOpen: boolean;
-  zIndex: number;
-  data: WindowData | null;
-};
+export type DockAppId = "finder" | "contacts" | "safari" | "photos" | "terminal" | "trash";
 
 export type DockApp = {
-  id: string;
+  id: DockAppId;
   name: string;
   image: string;
+  allowMultiple: boolean;
 };
 
-export type WindowKey =
-  | "finder"
-  | "contacts"
-  | "safari"
-  | "photos"
-  | "terminal"
-  | "txtFile"
-  | "imgFile"
-  | "trash";
+export type Stack = Array<WindowId>;
 
-export type Windows = Record<WindowKey, WindowState>;
-export type WindowsData = Record<WindowKey, WindowData>;
-export type DockApps = Omit<Record<WindowKey, DockApp>, "txtFile" | "imgFile">;
+export type Windows = Record<WindowId, WindowData>;
+export type DockApps = Record<DockAppId, DockApp>;
+
+export type InputWindowData = Omit<WindowData, "id" | "createdAt" | "isMinimized" | "isMaximized">;
