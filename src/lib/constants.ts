@@ -1,6 +1,7 @@
 import type { DockApps } from "@/types";
 
 export const INITIAL_Z_INDEX = 300;
+export const NAVBAR_HEADER_HEIGHT = 36;
 export const DEFAULT_WINDOW_POSITION = {
   x: 10,
   y: 10,

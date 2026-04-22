@@ -5,6 +5,14 @@ import { Icon } from "@/components/icons";
 export default function Navbar() {
   const reset = useDesktopStore((state) => state.reset);
 
+  function handleReset(e: React.MouseEvent) {
+    e.stopPropagation();
+    localStorage.clear();
+    window.location.reload();
+    resetPersistedStorage();
+    reset();
+  }
+
   return (
     <header className="bg-black/50 pr-2 pl-1 text-xs backdrop-blur-lg select-none">
       <nav className="flex items-center justify-between gap-4">
@@ -12,14 +20,7 @@ export default function Navbar() {
           <Icon name="apple" className="size-4" />
         </button>
         <div>
-          <button
-            className="rounded-sm px-2.5 py-1 active:bg-white/20"
-            onClick={() => {
-              localStorage.clear();
-              window.location.reload();
-              resetPersistedStorage();
-              reset();
-            }}>
+          <button className="rounded-sm px-2.5 py-1 active:bg-white/20" onClick={handleReset}>
             Reset
           </button>
         </div>

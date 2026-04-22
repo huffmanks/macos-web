@@ -62,18 +62,23 @@ export const useDesktopStore = create<DesktopStore>()(
       closeWindow: ({ windowId }) => {
         set((state) => {
           delete state.windows[windowId];
-          state.stack = state.stack.filter((id) => id !== windowId);
+
+          const index = state.stack.indexOf(windowId);
+          if (index !== -1) {
+            state.stack.splice(index, 1);
+          }
         });
       },
       focusWindow: ({ windowId }) => {
         set((state) => {
           const win = state.windows[windowId];
-          if (!win) return;
+          if (!win || win.isMinimized) return;
 
-          state.stack = state.stack.filter((id) => id !== windowId);
+          const index = state.stack.indexOf(windowId);
+          if (index !== -1) {
+            state.stack.splice(index, 1);
+          }
           state.stack.push(windowId);
-
-          win.isMinimized = false;
         });
       },
       minimizeWindow: ({ windowId }) => {
@@ -81,30 +86,12 @@ export const useDesktopStore = create<DesktopStore>()(
           const win = state.windows[windowId];
           if (!win) return;
 
-          // this never gets removed from stack or isMinimized never is true
-          state.stack = state.stack.filter((id) => id !== windowId);
           win.isMinimized = true;
-        });
-      },
 
-      restoreWindow: ({ windowId }) => {
-        set((state) => {
-          const win = state.windows[windowId];
-          if (!win) return;
-
-          if (win.isMaximized) {
-            // this seems to always have default and never had actual lastPosition or size
-            win.position = win.lastPosition ?? DEFAULT_WINDOW_POSITION;
-            win.size = win.lastSize ?? DEFAULT_WINDOW_SIZE;
-
-            delete win.lastSize;
-            delete win.lastPosition;
-
-            win.isMaximized = false;
+          const index = state.stack.indexOf(windowId);
+          if (index !== -1) {
+            state.stack.splice(index, 1);
           }
-
-          win.isMinimized = false;
-          state.stack.push(windowId);
         });
       },
       maximizeWindow: ({ windowId, size }) => {
@@ -112,17 +99,43 @@ export const useDesktopStore = create<DesktopStore>()(
           const win = state.windows[windowId];
           if (!win) return;
 
-          // this never gets set correctly
-          win.lastSize = win.size;
-          win.lastPosition = win.position;
+          win.lastSize = { ...win.size };
+          win.lastPosition = { ...win.position };
 
           win.position.x = 0;
           win.position.y = 0;
           win.size = size;
           win.isMaximized = true;
 
-          state.stack = state.stack.filter((id) => id !== windowId);
+          const index = state.stack.indexOf(windowId);
+          if (index !== -1) {
+            state.stack.splice(index, 1);
+            state.stack.push(windowId);
+          }
+        });
+      },
+      restoreWindow: ({ windowId }) => {
+        set((state) => {
+          const win = state.windows[windowId];
+          if (!win) return;
+
+          if (win.isMaximized) {
+            win.position = win.lastPosition ? { ...win.lastPosition } : DEFAULT_WINDOW_POSITION;
+            win.size = win.lastSize ? { ...win.lastSize } : DEFAULT_WINDOW_SIZE;
+
+            delete win.lastSize;
+            delete win.lastPosition;
+
+            win.isMaximized = false;
+          }
+
+          const index = state.stack.indexOf(windowId);
+          if (index !== -1) {
+            state.stack.splice(index, 1);
+          }
+
           state.stack.push(windowId);
+          win.isMinimized = false;
         });
       },
       moveWindow: ({ windowId, position }) => {
@@ -145,7 +158,6 @@ export const useDesktopStore = create<DesktopStore>()(
           }
         });
       },
-
       reset: () =>
         set((state) => {
           state.windows = {};
@@ -155,7 +167,6 @@ export const useDesktopStore = create<DesktopStore>()(
     {
       name: "desktop-store",
       storage: createJSONStorage(() => localStorage),
-      // partialize: (state) => ({ windows: state.windows, stack: state.stack }),
     }
   )
 );

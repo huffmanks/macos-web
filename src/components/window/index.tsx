@@ -3,14 +3,13 @@ import { useRef } from "react";
 import { type PanInfo, motion, useDragControls } from "motion/react";
 import { useShallow } from "zustand/shallow";
 
-import { DOCK_APPS } from "@/lib/constants";
+import { DOCK_APPS, NAVBAR_HEADER_HEIGHT } from "@/lib/constants";
 import { useDesktopStore } from "@/lib/store/desktop";
 import { cn } from "@/lib/utils";
 import type { WindowId } from "@/types";
 
+import { Icon } from "@/components/icons";
 import WindowContent from "@/components/window/content";
-
-import { Icon } from "../icons";
 
 export default function WindowFrame({
   windowId,
@@ -59,7 +58,9 @@ export default function WindowFrame({
     moveWindow({ windowId, position });
   }
 
-  function handleMaximizeWindow() {
+  function handleMaximizeWindow(e: React.MouseEvent) {
+    e.stopPropagation();
+
     const win = windows[windowId];
     if (win.isMaximized) {
       restoreWindow({ windowId });
@@ -70,7 +71,7 @@ export default function WindowFrame({
 
     const rect = constraintsRef.current.getBoundingClientRect();
     const size = {
-      height: rect.height,
+      height: rect.height - NAVBAR_HEADER_HEIGHT,
       width: rect.width,
     };
     maximizeWindow({ windowId, size });
@@ -117,7 +118,11 @@ export default function WindowFrame({
             <div
               className="group flex w-fit cursor-auto items-center gap-2"
               onPointerDown={(e) => e.stopPropagation()}>
-              <button onClick={() => closeWindow({ windowId })}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeWindow({ windowId });
+                }}>
                 <div
                   className={cn(
                     "flex size-3 items-center justify-center rounded-full group-hover:bg-red-500",
@@ -129,7 +134,11 @@ export default function WindowFrame({
                   />
                 </div>
               </button>
-              <button onClick={() => minimizeWindow({ windowId })}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  minimizeWindow({ windowId });
+                }}>
                 <div
                   className={cn(
                     "flex size-3 items-center justify-center rounded-full group-hover:bg-yellow-500",

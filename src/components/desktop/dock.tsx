@@ -38,7 +38,9 @@ function DockAppButton({ app, isLastItem }: { app: DockApp; isLastItem: boolean 
     position: DEFAULT_WINDOW_POSITION,
   };
 
-  function handleClick() {
+  function handleClick(e: React.MouseEvent) {
+    e.stopPropagation();
+
     if (!window) {
       openWindow({ data });
       return;
