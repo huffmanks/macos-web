@@ -2,7 +2,7 @@ import { useRef } from "react";
 
 import Dock from "@/components/desktop/dock";
 import Navbar from "@/components/desktop/navbar";
-import WindowManager from "@/components/window/manager";
+import WindowManager from "@/components/window";
 
 export default function App() {
   const constraintsRef = useRef<HTMLDivElement | null>(null);

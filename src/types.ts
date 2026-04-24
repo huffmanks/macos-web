@@ -1,3 +1,5 @@
+import type { DragControls } from "motion/react";
+
 export type WindowSize = {
   height: number;
   width: number;
@@ -38,3 +40,17 @@ export type Windows = Record<WindowId, WindowData>;
 export type DockApps = Record<DockAppId, DockApp>;
 
 export type InputWindowData = Omit<WindowData, "id" | "createdAt" | "isMinimized" | "isMaximized">;
+
+export interface AppContentComponentProps {
+  windowId: WindowId;
+  constraintsRef: React.RefObject<HTMLDivElement | null>;
+  dragControls: DragControls;
+}
+
+export type AppComponents = {
+  Content: React.ComponentType<object>;
+};
+
+export type AppRegistry = {
+  default: AppComponents;
+} & Partial<Record<DockAppId, AppComponents>>;

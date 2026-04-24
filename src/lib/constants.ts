@@ -1,4 +1,8 @@
-import type { DockApps } from "@/types";
+import type { AppRegistry, DockApps } from "@/types";
+
+import DefaultAppContent from "@/components/apps/default";
+import FinderAppContent from "@/components/apps/finder";
+import { withWindowContentProps } from "@/components/helpers";
 
 export const INITIAL_Z_INDEX = 300;
 export const NAVBAR_HEADER_HEIGHT = 36;
@@ -47,5 +51,14 @@ export const DOCK_APPS: DockApps = {
     name: "Trash",
     image: "/apps/trash.png",
     allowMultiple: false,
+  },
+};
+
+export const APP_REGISTRY: AppRegistry = {
+  default: {
+    Content: withWindowContentProps(DefaultAppContent),
+  },
+  finder: {
+    Content: withWindowContentProps(FinderAppContent),
   },
 };
