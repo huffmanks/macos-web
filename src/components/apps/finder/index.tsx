@@ -1,7 +1,8 @@
 import type { AppContentComponentProps } from "@/types";
 
 import FinderAppHeader from "@/components/apps/finder/header";
-import FinderSidebar from "@/components/apps/finder/sidebar";
+
+import FinderContent from "./content";
 
 export default function FinderAppContent({
   windowId,
@@ -9,16 +10,13 @@ export default function FinderAppContent({
   dragControls,
 }: AppContentComponentProps) {
   return (
-    <>
+    <div className="bg-muted/90 grid h-full grid-cols-[150px_1fr] backdrop-blur-sm">
       <FinderAppHeader
         windowId={windowId}
         constraintsRef={constraintsRef}
         dragControls={dragControls}
       />
-      <div className="bg-muted/90 grid flex-1 grid-cols-[100px_1fr] pl-4">
-        <FinderSidebar />
-        <div className="border-background bg-muted flex-1 border-t border-l p-4">body</div>
-      </div>
-    </>
+      <FinderContent />
+    </div>
   );
 }

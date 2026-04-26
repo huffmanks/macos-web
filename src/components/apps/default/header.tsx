@@ -11,10 +11,12 @@ export default function AppHeader({
   windowId,
   constraintsRef,
   dragControls,
-  className,
+  headerClassName,
+  buttonWrapperClassName,
   children,
 }: AppContentComponentProps & {
-  className?: string;
+  headerClassName?: string;
+  buttonWrapperClassName?: string;
   children?: React.ReactNode;
 }) {
   const windows = useDesktopStore((state) => state.windows);
@@ -54,14 +56,17 @@ export default function AppHeader({
 
   return (
     <header
-      className={cn("bg-secondary p-3 active:cursor-grabbing", className)}
+      className={cn("bg-secondary active:cursor-grabbing", headerClassName)}
       onPointerDown={(e) => {
         e.stopPropagation();
         focusWindow({ windowId });
         dragControls.start(e, { snapToCursor: false });
       }}>
       <div
-        className="group flex w-full cursor-auto items-center gap-2"
+        className={cn(
+          "group flex w-fit cursor-auto items-center gap-2 p-3",
+          buttonWrapperClassName
+        )}
         onPointerDown={(e) => e.stopPropagation()}>
         <button
           onClick={(e) => {

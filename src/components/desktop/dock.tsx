@@ -34,8 +34,8 @@ function DockAppButton({ app, isLastItem }: { app: DockApp; isLastItem: boolean 
 
   const data: InputWindowData = {
     appId: app.id,
-    size: DEFAULT_WINDOW_SIZE,
-    position: DEFAULT_WINDOW_POSITION,
+    size: app.size ?? DEFAULT_WINDOW_SIZE,
+    position: app.position ?? DEFAULT_WINDOW_POSITION,
   };
 
   function handleClick(e: React.MouseEvent) {

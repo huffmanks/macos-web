@@ -14,11 +14,11 @@ export default function DefaultAppContent({
   const dockApp = DOCK_APPS[window.appId];
 
   return (
-    <>
+    <div className="bg-background h-full">
       <AppHeader windowId={windowId} constraintsRef={constraintsRef} dragControls={dragControls} />
       <div className="p-4">
         <h2 className="text-lg font-medium">{dockApp.name}</h2>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import type { AppRegistry, DockApps } from "@/types";
+import type { AppRegistry, DockApps, FinderSidebarButton } from "@/types";
 
 import DefaultAppContent from "@/components/apps/default";
 import FinderAppContent from "@/components/apps/finder";
@@ -21,6 +21,10 @@ export const DOCK_APPS: DockApps = {
     name: "Finder",
     image: "/apps/finder.png",
     allowMultiple: false,
+    size: {
+      width: 800,
+      height: 400,
+    },
   },
   terminal: {
     id: "terminal",
@@ -62,3 +66,14 @@ export const APP_REGISTRY: AppRegistry = {
     Content: withWindowContentProps(FinderAppContent),
   },
 };
+
+export const FINDER_SIDEBAR_BUTTONS: Array<FinderSidebarButton> = [
+  {
+    name: "Documents",
+    icon: "documents",
+  },
+  {
+    name: "Downloads",
+    icon: "downloads",
+  },
+];

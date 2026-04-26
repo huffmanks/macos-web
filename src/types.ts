@@ -1,5 +1,7 @@
 import type { DragControls } from "motion/react";
 
+import type { IconName } from "@/components/icons";
+
 export type WindowSize = {
   height: number;
   width: number;
@@ -32,6 +34,8 @@ export type DockApp = {
   name: string;
   image: string;
   allowMultiple: boolean;
+  size?: WindowSize;
+  position?: WindowPosition;
 };
 
 export type Stack = Array<WindowId>;
@@ -54,3 +58,18 @@ export type AppComponents = {
 export type AppRegistry = {
   default: AppComponents;
 } & Partial<Record<DockAppId, AppComponents>>;
+
+export type FileKind = "Document" | "PNG image" | "JPG image" | "PDF Document" | "Folder";
+export type LastActiveDirectory = "Documents" | "Downloads";
+
+export type FinderFile = {
+  name: string;
+  dateModified: string;
+  size: string;
+  kind: FileKind;
+};
+
+export type FinderSidebarButton = {
+  name: LastActiveDirectory;
+  icon: IconName;
+};

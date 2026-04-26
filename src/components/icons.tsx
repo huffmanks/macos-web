@@ -88,9 +88,33 @@ const icons = {
       />
     </svg>
   ),
+  downloads: ({ className }: { className?: string }) => (
+    <svg
+      className={cn(className)}
+      xmlns="http://www.w3.org/2000/svg"
+      width={24}
+      height={24}
+      viewBox="0 0 24 24">
+      <path
+        fill="currentColor"
+        d="m16.53 11.72l-.084-.073a.75.75 0 0 0-.977.073l-2.72 2.72V7.75l-.007-.102A.75.75 0 0 0 12 7l-.101.006a.75.75 0 0 0-.649.744v6.691L8.53 11.72l-.084-.072a.75.75 0 0 0-.977 1.133l4 4.001l.084.073a.75.75 0 0 0 .977-.073l4-4l.073-.085a.75.75 0 0 0-.072-.976M1.999 12c0 5.523 4.477 10 10 10s10-4.477 10-10s-4.477-10-10-10s-10 4.477-10 10m18.5 0a8.5 8.5 0 1 1-17 0a8.5 8.5 0 0 1 17 0"></path>
+    </svg>
+  ),
+  documents: ({ className }: { className?: string }) => (
+    <svg
+      className={cn(className)}
+      xmlns="http://www.w3.org/2000/svg"
+      width={20}
+      height={20}
+      viewBox="0 0 20 20">
+      <path
+        fill="currentColor"
+        d="M6 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7.414a1.5 1.5 0 0 0-.44-1.06l-3.914-3.915A1.5 1.5 0 0 0 10.586 2zM5 4a1 1 0 0 1 1-1h4v3.5A1.5 1.5 0 0 0 11.5 8H15v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1zm9.793 3H11.5a.5.5 0 0 1-.5-.5V3.207z"></path>
+    </svg>
+  ),
 };
 
-type IconName = keyof typeof icons;
+export type IconName = keyof typeof icons;
 
 export function Icon({ name, className }: { name: IconName; className?: string }) {
   const IconComponent = icons[name];
