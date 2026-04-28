@@ -3,29 +3,32 @@ import { useFinderStore } from "@/lib/store/finder";
 import { cn } from "@/lib/utils";
 import type { AppContentComponentProps, FinderSidebarButton } from "@/types";
 
-import AppHeader from "@/components/apps/default/header";
 import { Icon } from "@/components/icons";
+import WindowControls from "@/components/window/controls";
 
-export default function FinderAppHeader({
+export default function FinderAppSidebar({
   windowId,
   constraintsRef,
   dragControls,
 }: AppContentComponentProps) {
   return (
-    <AppHeader
-      windowId={windowId}
-      constraintsRef={constraintsRef}
-      dragControls={dragControls}
-      headerClassName="bg-transparent"
-      buttonWrapperClassName="p-4">
-      <aside className="p-2">
-        <div className="select-none">
-          {FINDER_SIDEBAR_BUTTONS.map((button) => (
-            <SidebarButton key={button.name} button={button} />
-          ))}
-        </div>
-      </aside>
-    </AppHeader>
+    <div className="flex h-full flex-col">
+      <WindowControls
+        windowId={windowId}
+        constraintsRef={constraintsRef}
+        dragControls={dragControls}
+        headerClassName="bg-transparent"
+        buttonWrapperClassName="p-3">
+        <aside className="flex-1 p-2">
+          <div className="select-none">
+            <div className="text-muted-foreground mb-1 px-2 text-[10px] font-medium">Favorites</div>
+            {FINDER_SIDEBAR_BUTTONS.map((button) => (
+              <SidebarButton key={button.name} button={button} />
+            ))}
+          </div>
+        </aside>
+      </WindowControls>
+    </div>
   );
 }
 

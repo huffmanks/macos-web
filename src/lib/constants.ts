@@ -1,8 +1,8 @@
+import { withAppContentProps } from "@/lib/with-app-content-props";
 import type { AppRegistry, DockApps, FinderSidebarButton } from "@/types";
 
 import DefaultAppContent from "@/components/apps/default";
 import FinderAppContent from "@/components/apps/finder";
-import { withWindowContentProps } from "@/components/helpers";
 
 export const INITIAL_Z_INDEX = 300;
 export const NAVBAR_HEADER_HEIGHT = 36;
@@ -22,8 +22,8 @@ export const DOCK_APPS: DockApps = {
     image: "/apps/finder.png",
     allowMultiple: false,
     size: {
-      width: 800,
-      height: 400,
+      width: "auto",
+      height: "auto",
     },
   },
   terminal: {
@@ -60,10 +60,10 @@ export const DOCK_APPS: DockApps = {
 
 export const APP_REGISTRY: AppRegistry = {
   default: {
-    Content: withWindowContentProps(DefaultAppContent),
+    Content: withAppContentProps(DefaultAppContent),
   },
   finder: {
-    Content: withWindowContentProps(FinderAppContent),
+    Content: withAppContentProps(FinderAppContent),
   },
 };
 

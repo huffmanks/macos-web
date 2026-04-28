@@ -1,4 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
+import type { DragControls } from "motion/react";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: Array<ClassValue>) {
@@ -23,4 +24,9 @@ export function getFormattedDateTime() {
   }).format(now);
 
   return { date: datePart, time: timePart };
+}
+
+export function handleDragStart(e: React.PointerEvent, dragControls: DragControls) {
+  e.stopPropagation();
+  dragControls.start(e, { snapToCursor: false });
 }

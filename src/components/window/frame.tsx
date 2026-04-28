@@ -1,4 +1,4 @@
-import { Children, type ReactElement, cloneElement, isValidElement, useRef } from "react";
+import { Children, type ReactElement, cloneElement, isValidElement, useRef, useState } from "react";
 
 import { type PanInfo, motion, useDragControls } from "motion/react";
 import { useShallow } from "zustand/shallow";
@@ -16,12 +16,12 @@ export default function WindowFrame({
   constraintsRef: React.RefObject<HTMLDivElement | null>;
   children: React.ReactNode;
 }) {
+  const [isDragging, setIsDragging] = useState(false);
   const windowRef = useRef<HTMLDivElement | null>(null);
   const dragControls = useDragControls();
 
   const windows = useDesktopStore((state) => state.windows);
   const stack = useDesktopStore((state) => state.stack);
-
   const { focusWindow, moveWindow } = useDesktopStore(
     useShallow((state) => ({
       focusWindow: state.focusWindow,
@@ -34,6 +34,9 @@ export default function WindowFrame({
   const zIndex = stack.indexOf(windowId);
 
   function handleOnDragEnd(_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) {
+    setIsDragging(false);
+    focusWindow({ windowId });
+
     if (!constraintsRef.current || !windowRef.current) return;
 
     const container = constraintsRef.current.getBoundingClientRect();
@@ -82,10 +85,11 @@ export default function WindowFrame({
         dragControls={dragControls}
         dragListener={false}
         dragMomentum={false}
+        onDragStart={() => setIsDragging(true)}
         onDragEnd={handleOnDragEnd}
         className="absolute touch-none"
         style={{
-          zIndex,
+          zIndex: isDragging ? 9998 : zIndex,
         }}
         onClick={(e) => {
           e.stopPropagation();

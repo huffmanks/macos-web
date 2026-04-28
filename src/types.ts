@@ -3,8 +3,8 @@ import type { DragControls } from "motion/react";
 import type { IconName } from "@/components/icons";
 
 export type WindowSize = {
-  height: number;
-  width: number;
+  height: number | "auto";
+  width: number | "auto";
 };
 
 export type WindowPosition = {

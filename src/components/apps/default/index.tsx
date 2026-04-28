@@ -2,7 +2,7 @@ import { DOCK_APPS } from "@/lib/constants";
 import { useDesktopStore } from "@/lib/store/desktop";
 import type { AppContentComponentProps } from "@/types";
 
-import AppHeader from "@/components/apps/default/header";
+import WindowControls from "@/components/window/controls";
 
 export default function DefaultAppContent({
   windowId,
@@ -15,7 +15,11 @@ export default function DefaultAppContent({
 
   return (
     <div className="bg-background h-full">
-      <AppHeader windowId={windowId} constraintsRef={constraintsRef} dragControls={dragControls} />
+      <WindowControls
+        windowId={windowId}
+        constraintsRef={constraintsRef}
+        dragControls={dragControls}
+      />
       <div className="p-4">
         <h2 className="text-lg font-medium">{dockApp.name}</h2>
       </div>
