@@ -1,4 +1,5 @@
 import { FINDER_SIDEBAR_BUTTONS } from "@/lib/constants";
+import { useDesktopStore } from "@/lib/store/desktop";
 import { useFinderStore } from "@/lib/store/finder";
 import { cn } from "@/lib/utils";
 import type { AppContentComponentProps, FinderSidebarButton } from "@/types";
@@ -11,8 +12,11 @@ export default function FinderAppSidebar({
   constraintsRef,
   dragControls,
 }: AppContentComponentProps) {
+  const stack = useDesktopStore((state) => state.stack);
+  const focusedWindowId = stack[stack.length - 1] ?? null;
+
   return (
-    <div className="flex h-full flex-col">
+    <div className={cn("flex h-full flex-col", windowId !== focusedWindowId && "opacity-50")}>
       <WindowControls
         windowId={windowId}
         constraintsRef={constraintsRef}

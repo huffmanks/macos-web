@@ -4,7 +4,7 @@ import type { AppContentComponentProps } from "@/types";
 
 import WindowControls from "@/components/window/controls";
 
-export default function DefaultAppContent({
+export default function DefaultApp({
   windowId,
   constraintsRef,
   dragControls,

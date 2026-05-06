@@ -3,7 +3,7 @@ import type { AppContentComponentProps } from "@/types";
 import FinderContent from "@/components/apps/finder/content";
 import FinderAppSidebar from "@/components/apps/finder/sidebar";
 
-export default function FinderAppContent({
+export default function FinderApp({
   windowId,
   constraintsRef,
   dragControls,
@@ -15,7 +15,7 @@ export default function FinderAppContent({
         constraintsRef={constraintsRef}
         dragControls={dragControls}
       />
-      <FinderContent dragControls={dragControls} />
+      <FinderContent windowId={windowId} dragControls={dragControls} />
     </div>
   );
 }

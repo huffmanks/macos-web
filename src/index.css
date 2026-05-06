@@ -38,3 +38,41 @@
     @apply font-sans;
   }
 }
+
+/* ===== Scrollbar CSS ===== */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Firefox */
+.scrollbar {
+  scrollbar-width: auto;
+  scrollbar-color: var(--input);
+}
+
+.scrollbar:hover,
+.scrollbar:active {
+  scrollbar-color: var(--border);
+}
+
+/* Chrome, Edge and Safari */
+.scrollbar::-webkit-scrollbar {
+  width: 11px;
+  overflow-y: scroll;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background-color: var(--muted);
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background-clip: content-box;
+  background-color: var(--input);
+  border-radius: 5px;
+  border: 1px solid var(--input);
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover,
+.scrollbar::-webkit-scrollbar-thumb:active {
+  background-color: var(--border);
+}

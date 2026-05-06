@@ -1,12 +1,26 @@
 import type { DragControls } from "motion/react";
 
-import { handleDragStart } from "@/lib/utils";
+import { useDesktopStore } from "@/lib/store/desktop";
+import { cn, handleDragStart } from "@/lib/utils";
+import type { WindowId } from "@/types";
 
-export default function FinderContent({ dragControls }: { dragControls: DragControls }) {
+export default function FinderAppContent({
+  windowId,
+  dragControls,
+}: {
+  windowId: WindowId;
+  dragControls: DragControls;
+}) {
+  const stack = useDesktopStore((state) => state.stack);
+  const focusedWindowId = stack[stack.length - 1] ?? null;
+
   return (
     <div className="bg-background flex flex-col">
       <header
-        className="border-l-background bg-input/70 flex h-12 items-center border-l select-none active:cursor-grabbing"
+        className={cn(
+          "border-l-background bg-input/70 flex h-12 items-center border-l select-none active:cursor-grabbing",
+          windowId !== focusedWindowId && "opacity-70"
+        )}
         onPointerDown={(e) => handleDragStart(e, dragControls)}>
         <div className="px-4 text-sm font-bold">Downloads</div>
       </header>
@@ -47,7 +61,10 @@ export default function FinderContent({ dragControls }: { dragControls: DragCont
         </table>
       </div>
       <footer
-        className="border-background items-center border-t border-l bg-white/20 select-none"
+        className={cn(
+          "border-background items-center border-t border-l bg-white/20 select-none",
+          windowId !== focusedWindowId && "opacity-70"
+        )}
         onPointerDown={(e) => handleDragStart(e, dragControls)}>
         <div className="text-muted-foreground px-4 py-1 text-center text-xs">3 Items</div>
       </footer>
